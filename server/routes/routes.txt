@@ -1,0 +1,33 @@
+/products
+
+get products
+
+
+
+
+/users/:userId
+get info user/profile
+
+/users/:userId/orders
+get orders of specific user
+
+/users/:userId/orders/:orderId
+get specific order from specific user
+
+
+
+
+/dashboard
+Administrator dashboard
+
+/dashboard/orders/
+Orders from clients
+
+/dashboard/orders/:orderId
+Get specific order  GET, PUT, DELETE
+
+/dashboard/products/
+GET List of products and PUT a new product
+
+/dashboard/products/:productId
+GET PUT DELETE PATCH the product products
