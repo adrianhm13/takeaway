@@ -58,6 +58,7 @@ export default function ModalLogin(props) {
             type="submit"
             form="login-form"
           >
+            LOGIN
           </Button>
         </Box>
       </Fade>

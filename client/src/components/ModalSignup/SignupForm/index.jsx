@@ -1,44 +1,52 @@
 import { TextField, Stack } from "@mui/material";
 
-
-export default function SignupForm(props) {
+export default function SignupForm({
+  error,
+  handleSubmit,
+  formData,
+  setFormData
+}) {
   return (
     <form
       autoComplete="off"
-      id="login-form"
-      onSubmit={(e) => props.handleSubmit(e)}
+      id="signup-form"
+      onSubmit={(e) => handleSubmit(e)}
+      method="POST"
     >
       <Stack spacing={3}>
         <TextField
           id="outlined-email"
           label="Email"
-          value={props.email}
+          name="email"
+          value={formData.email}
           required
           type="email"
           color="secondary"
           variant="outlined"
-          onChange={(e) => props.setEmail(e.target.value)}
+          onChange={(e) => setFormData({...formData, email: e.target.value})}
         />
         <TextField
           id="outlined-name"
           label="Name"
-          value={props.name}
+          name="name"
+          value={formData.name}
           type="text"
           required
           color="secondary"
           variant="outlined"
-          onChange={(e) => props.setName(e.target.value)}
+          onChange={(e) => setFormData({...formData, name: e.target.value})}
         />
         <TextField
           id="outlined-password"
           label="Password"
-          value={props.password}
+          name="password"
+          value={formData.password}
           required
-          helperText={props.error}
+          helperText={error}
           type="password"
           color="secondary"
           variant="outlined"
-          onChange={(e) => props.setPassword(e.target.value)}
+          onChange={(e) => setFormData({...formData, password: e.target.value})}
         />
       </Stack>
     </form>

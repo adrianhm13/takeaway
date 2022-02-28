@@ -10,18 +10,19 @@ import Button from "@mui/material/Button";
 import * as Style from "./style";
 import SignupForm from "./SignupForm";
 
-export default function ModalSignup({ onOpenSignup, openSignup }) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
+const initialData = { name: "", password: "", email: "" };
 
+export default function ModalSignup({ onOpenSignup, openSignup }) {
+  const [formData, setFormData] = useState(initialData);
   const { error, signup } = useSignup();
 
   const handleClose = () => onOpenSignup(false);
   const handleSubmit = (e) => {
     e.preventDefault();
-    signup(email, password, name);
+    console.log("Form submited");
+    signup(formData);
   };
+
   return (
     <Modal
       aria-labelledby="transition-modal-title"
@@ -43,12 +44,8 @@ export default function ModalSignup({ onOpenSignup, openSignup }) {
             Signup to get special discounts and follow your orders
           </Typography>
           <SignupForm
-            email={email}
-            setEmail={setEmail}
-            password={password}
-            setPassword={setPassword}
-            name={name}
-            setName={setName}
+            formData={formData}
+            setFormData={setFormData}
             error={error}
             handleSubmit={handleSubmit}
           />
@@ -57,7 +54,7 @@ export default function ModalSignup({ onOpenSignup, openSignup }) {
             variant="contained"
             color="secondary"
             type="submit"
-            form="login-form"
+            form="signup-form"
           >
             Signup
           </Button>

@@ -11,7 +11,9 @@ import { AppBar, Toolbar, Container } from "@mui/material";
 export default function Navbar() {
   const [anchorElNav, setAnchorElNav] = useState(null);
 
-
+  // Mock user
+  const user = null
+  
   const handleOpenNavMenu = e => {
     setAnchorElNav(e.currentTarget);
   };
@@ -28,8 +30,8 @@ export default function Navbar() {
           />
           <LogoPhone />
           <NavMenuPages />
-          {/* {user && <SettingsUserMenu user={user} />}
-          {!user && <SignInMenu />} */}
+          {user && <SettingsUserMenu user={user} />}
+          {!user && <SignInMenu />}
         </Toolbar>
       </Container>
     </AppBar>

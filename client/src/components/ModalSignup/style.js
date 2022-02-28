@@ -6,7 +6,7 @@ export const ModalContent = {
     bgcolor: "background.paper",
     border: "1px solid #eceff1",
     boxShadow: 24,
-    width: { xs: "240px", sm: "400px" },
+    width: { xs: "75%", sm: "400px" },
     p: 4,
     borderRadius: "5px",
   };
