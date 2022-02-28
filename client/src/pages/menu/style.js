@@ -9,6 +9,6 @@ export const HeaderHero = {
   backgroundSize: "cover",
   backgroundPositionY: "60%",
   height: "200px",
-} as const;
+}
 
 export const DishCardList = { paddingRight: { xs: "0", md: "300px" } }

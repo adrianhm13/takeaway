@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useLogout } from "../../../hooks/useLogout";
 
 import {
   Box,
@@ -13,8 +12,6 @@ import {
 
 export default function SettingsUserMenu(props) {
   const [anchorElUser, setAnchorElUser] = useState(null);
-
-  const { logout } = useLogout();
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget); //Ref for menu's position
@@ -45,7 +42,7 @@ export default function SettingsUserMenu(props) {
         <MenuItem onClick={() => setAnchorElUser(null)}>
           <Typography textAlign="center">Orders</Typography>
         </MenuItem>
-        <MenuItem onClick={logout}>
+        <MenuItem onClick={() => {}}>
           <Typography textAlign="center">Logout</Typography>
         </MenuItem>
       </Menu>
