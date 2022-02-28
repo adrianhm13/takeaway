@@ -1,3 +1,5 @@
+import { useGetProducts } from "../../hooks/useGetProducts";
+
 //Components
 import DishCard from "./DishCard";
 import { Box, Container } from "@mui/material";
@@ -6,20 +8,16 @@ import { DrawerPhone } from "./DrawerPhone";
 
 //Style
 import * as Styled from "./style";
-// import { useGetProducts } from "../../hooks/useGetProducts";
-
-
 
 export default function Menu() {
-  // const {products} = useGetProducts()
+  const { products } = useGetProducts();
   return (
     <Container maxWidth={false} disableGutters>
       <HeaderHero />
       <DrawerDesktop />
       <Container maxWidth={"xl"}>
         <Box paddingY={3} sx={Styled.DishCardList}>
-          {/* Map to show DishCard with dish information as prop */}
-          {/* {products && products.map(product => (<DishCard key={product.id} product={product}/>))} */}
+          {products && products.map(product => (<DishCard key={product._id} product={product}/>))}
         </Box>
         <DrawerPhone />
       </Container>
@@ -28,5 +26,5 @@ export default function Menu() {
 }
 
 function HeaderHero() {
-  return <Box sx={Styled.HeaderHero} />
+  return <Box sx={Styled.HeaderHero} />;
 }

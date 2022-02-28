@@ -22,6 +22,7 @@ export default function DishCard({ product }) {
         <Box sx={Styled.CardContent}>
           <Box display={"flex"} flexDirection={"column"}>
             <DishInformation
+              price={product.price}
               title={product.title}
               description={product.description}
               isExpanded={isExpanded}
