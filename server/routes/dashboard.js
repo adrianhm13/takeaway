@@ -17,10 +17,10 @@ const router = express.Router();
 // Routes for administrator in the dashboard
 
 router.get("/orders", getOrders);
+router.post("/orders/", addSpecificOrder);
 
 router.get("/orders/:orderId", getSpecificOrder);
 router.delete("/orders/:orderId", deleteSpecificOrder);
-router.post("/orders/:orderId", addSpecificOrder);
 router.put("/orders/:orderId", updateSpecificOrder);
 
 router.get("/products", getProducts);
