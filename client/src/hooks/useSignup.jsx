@@ -1,26 +1,21 @@
 import { useState, useEffect } from "react";
-// import { useAuthContext } from "./useAuthContext";
+import { createUser } from "../api";
 
 export const useSignup = () => {
   const [isCancelled, setIsCancelled] = useState(false);
   const [error, setError] = useState(null);
   const [isPending, setIsPending] = useState(false);
-  const [user, setUser] = useState(null);
-  // const { dispatch } = useAuthContext();
 
-  const signup = async (email, password, username) => {
+  const signup = async (formData) => {
     setError(null);
     setIsPending(true);
     try {
-
-      // if (!response) {
-      //   throw new Error("It wasn't possible to signup");
-      // }
-
-
-      //Dispatch login action
-      // dispatch({ type: "LOGIN", payload: response.user });
-
+      const { data } = await createUser(formData);
+      if (!data.ok) {
+        data.errors.forEach((error) => {
+          throw new Error(error.msg);
+        });
+      }
     } catch (error) {
       setError(error.message);
       if (!isCancelled) {
@@ -37,5 +32,5 @@ export const useSignup = () => {
     };
   }, []);
 
-  return { error, signup, isPending, user };
+  return { error, signup, isPending };
 };
