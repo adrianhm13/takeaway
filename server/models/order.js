@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
 
 const orderSchema = mongoose.Schema({
-  client: { type: Schema.Type.ObjectId, ref: "User" },
-  products: [{ type: Schema.Type.ObjectId, ref: "Product" }],
+  client: { type: Schema.Types.ObjectId, ref: "User" },
+  products: [{ type: Schema.Types.ObjectId, ref: "Product" }],
   orderedAt: {
     type: Date,
     default: new Date(),
