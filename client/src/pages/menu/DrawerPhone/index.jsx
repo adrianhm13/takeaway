@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { CartContext } from "../../../context/CartContext";
+// import { CartContext } from "../../../context/CartContext";
 
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 import { Badge, Button, Drawer } from "@mui/material";
@@ -8,7 +8,7 @@ import * as Styled from "./style";
 
 export function DrawerPhone() {
   const [isOpen, setIsOpen] = useState(false);
-  const { state: orders } = useContext(CartContext);
+  // const { state: orders } = useContext(CartContext);
   return (
     <>
       <Drawer anchor="bottom" open={isOpen} onClose={() => setIsOpen(false)}>
@@ -19,7 +19,7 @@ export function DrawerPhone() {
         onClick={() => setIsOpen(true)}
         sx={Styled.CartButton}
       >
-        <Badge badgeContent={orders.listItems.length} color="secondary">
+        <Badge badgeContent={0} color="secondary">
           <ShoppingBasketIcon />
         </Badge>
         Cart

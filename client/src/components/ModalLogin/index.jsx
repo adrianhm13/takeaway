@@ -1,4 +1,3 @@
-import { useLogin } from "../../hooks/useLogin";
 import { useEffect, useState } from "react";
 
 import { Backdrop, Box, Modal, Fade, Typography, Button } from "@mui/material";
@@ -11,18 +10,18 @@ export default function ModalLogin(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { user, error, login, isPending } = useLogin();
+  // const { user, error, login, isPending } = useLogin();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    login(email, password);
+    // login(email, password);
   };
 
-  useEffect(() => {
-    if (user) {
-      onOpenLogin(false);
-    }
-  }, [user, onOpenLogin]);
+  // useEffect(() => {
+  //   if (user) {
+  //     onOpenLogin(false);
+  //   }
+  // }, [user, onOpenLogin]);
 
   return (
     <Modal
@@ -49,7 +48,7 @@ export default function ModalLogin(props) {
             setEmail={setEmail}
             password={password}
             setPassword={setPassword}
-            error={error}
+            error={'error'}
             handleSubmit={handleSubmit}
           />
           <Button
@@ -59,7 +58,6 @@ export default function ModalLogin(props) {
             type="submit"
             form="login-form"
           >
-            {isPending ? "Loading" : "Login"}
           </Button>
         </Box>
       </Fade>

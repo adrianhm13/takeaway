@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { CartContext } from "../../../../context/CartContext";
+// import { CartContext } from "../../../../context/CartContext";
 
 //Components
 import {
@@ -29,7 +29,7 @@ export function DishOptions(props) {
 
   const uniqueId = Math.random().toString(16).slice(2);
 
-  const { dispatch } = useContext(CartContext);
+  // const { dispatch } = useContext(CartContext);
 
   const handleSubmit = (e) => {
     const formData = new FormData(e.currentTarget);
@@ -39,17 +39,17 @@ export function DishOptions(props) {
       options.push(key);
     }
     setOptions(optionsChoosen);
-    dispatch({
-      type: "ADD_ITEM",
-      payload: {
-        id: uniqueId,
-        title: title,
-        price: price,
-        priceTotal: total,
-        qty: quantity,
-        options,
-      },
-    });
+    // dispatch({
+    //   type: "ADD_ITEM",
+    //   payload: {
+    //     id: uniqueId,
+    //     title: title,
+    //     price: price,
+    //     priceTotal: total,
+    //     qty: quantity,
+    //     options,
+    //   },
+    // });
     onExpanded(!onExpanded);
   };
 
