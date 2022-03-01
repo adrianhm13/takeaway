@@ -10,17 +10,30 @@ import Button from "@mui/material/Button";
 import * as Style from "./style";
 import SignupForm from "./SignupForm";
 
-const initialData = { name: "", password: "", email: "" };
+const initialData = {
+  firstName: "",
+  lastName: "",
+  dateBirth: "",
+  password: "",
+  email: "",
+  street: "",
+  zipCode: "",
+  town: "",
+  phone: "",
+};
 
 export default function ModalSignup({ onOpenSignup, openSignup }) {
   const [formData, setFormData] = useState(initialData);
   const { error, signup } = useSignup();
 
   const handleClose = () => onOpenSignup(false);
-  const handleSubmit = (e) => {
+  
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form submited");
-    signup(formData);
+    const response = await signup(formData);
+    if (response.ok) {
+      onOpenSignup(false);
+    }
   };
 
   return (
