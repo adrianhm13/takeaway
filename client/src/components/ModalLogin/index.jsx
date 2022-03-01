@@ -3,25 +3,22 @@ import { useEffect, useState } from "react";
 import { Backdrop, Box, Modal, Fade, Typography, Button } from "@mui/material";
 import * as Styled from "./style";
 import LoginForm from "./LoginForm";
+import { useLogin } from "../../hooks/useLogin";
 
 export default function ModalLogin(props) {
   const { openLogin, onOpenLogin } = props;
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [formData, setFormData] = useState({ username: "", password: "" });
 
-  // const { user, error, login, isPending } = useLogin();
+  const { login, error } = useLogin();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // login(email, password);
+    const response = await login(formData);
+    if (response.ok) {
+      onOpenLogin(false);
+    }
   };
-
-  // useEffect(() => {
-  //   if (user) {
-  //     onOpenLogin(false);
-  //   }
-  // }, [user, onOpenLogin]);
 
   return (
     <Modal
@@ -44,11 +41,9 @@ export default function ModalLogin(props) {
             Welcome back
           </Typography>
           <LoginForm
-            email={email}
-            setEmail={setEmail}
-            password={password}
-            setPassword={setPassword}
-            error={'error'}
+            formData={formData}
+            setFormData={setFormData}
+            error={error}
             handleSubmit={handleSubmit}
           />
           <Button

@@ -1,34 +1,35 @@
 import { useEffect, useState } from "react";
-// import { useAuthContext } from "./useAuthContext";
+import { loginUser } from "../api";
 
 export const useLogin = () => {
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
   const [isPending, setIsPending] = useState(false);
   const [isCancelled, setIsCancelled] = useState(false);
-  // const { dispatch } = useAuthContext();
 
-  const login = async (email, password) => {
+  const login = async (user) => {
     setError(null);
     setIsPending(true);
-
+    setIsCancelled(false);
     try {
-      //Login user
-      // const response = await signInWithEmailAndPassword(auth, email, password);
-      // setUser(response.user)
-      //Dispatch login action
-      // dispatch({ type: "LOGIN", payload: response.user });
+      const { data } = await loginUser(user);
 
-      //Update states
-      if (!isCancelled) {
-        setIsPending(false);
-        setError(null);
+      if (data.ok) {
+        setUser(data.user);
+
+        if (!isCancelled) {
+          setIsPending(false);
+          setError(null);
+        }
+        return { ok: true };
+      } else {
+        throw new Error(data.message);
       }
     } catch (error) {
       if (!isCancelled) {
         setIsPending(false);
-        console.log(error);
         setError(error.message);
+        return { ok: false };
       }
     }
   };

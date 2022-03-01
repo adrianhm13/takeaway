@@ -1,29 +1,36 @@
 import { TextField, Stack } from "@mui/material";
 
-export default function LoginForm(props) {
+export default function LoginForm({
+  formData,
+  setFormData,
+  error,
+  handleSubmit,
+}) {
   return (
-    <form id="login-form" onSubmit={(e) => props.handleSubmit(e)}>
+    <form id="login-form" onSubmit={(e) => handleSubmit(e)}>
       <Stack spacing={3}>
         <TextField
           id="outlined-email"
           label="Email"
-          value={props.email}
+          value={formData.username}
           required
           type="email"
           color="secondary"
           variant="outlined"
-          onChange={(e) => props.setEmail(e.target.value)}
+          onChange={(e) => setFormData({ ...formData, username: e.target.value })}
         />
         <TextField
           id="outlined-password"
           label="Password"
-          value={props.password}
+          value={formData.password}
           required
           type="password"
           color="secondary"
           variant="outlined"
-          helperText={props.error}
-          onChange={(e) => props.setPassword(e.target.value)}
+          helperText={error}
+          onChange={(e) =>
+            setFormData({ ...formData, password: e.target.value })
+          }
         />
       </Stack>
     </form>
