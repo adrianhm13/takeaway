@@ -13,6 +13,7 @@ const userSchema = mongoose.Schema({
   phone: { type: Number, maxLength: 10, minLength: 1 },
   orders: [{ type: mongoose.Schema.Types.ObjectId, ref: "Order" }],
   isAdmin: { type: Boolean, default: false },
+  password: {type: String, required: true}
 });
 
 const User = mongoose.model("User", userSchema);

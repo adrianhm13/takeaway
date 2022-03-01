@@ -1,6 +1,7 @@
 import User from "../models/user.js";
 import { body, validationResult } from "express-validator";
-
+import bcrypt from "bcryptjs";
+import passport from "passport";
 export const userProfile = (req, res) => {
   res.send("User Profile");
 };
@@ -10,6 +11,15 @@ export const getOrdersUser = (req, res) => {
 export const getSpecificOrderUser = (req, res) => {
   res.send("Get Specific order from user");
 };
+
+export const loginUser = (req, res, next) => {
+  passport.authenticate("local", (err, user, info) => {
+    if (err) throw err;
+    if (!user) return res.json(info);
+    console.log(user);
+    if (user) return res.status(200).json({ ok: true, user });
+  })(req, res, next);
+}
 
 export const createUser = [
   body("firstName", "First name required")
@@ -24,8 +34,7 @@ export const createUser = [
     .escape(),
   body("email", "Email required")
     .isEmail()
-    .withMessage("Write an email address")
-    .normalizeEmail(),
+    .withMessage("Write an email address"),
   body("phone", "A valid phone is required").isMobilePhone(),
   async (req, res, next) => {
     const errors = validationResult(req);
@@ -38,6 +47,20 @@ export const createUser = [
           errors: errors.array(),
         });
       }
+
+      // If existing user, return an error
+      const existingUser = await User.findOne({ email: req.body.email });
+      if (existingUser)
+        return res.json({
+          typeError: "existingUser",
+          ok: false,
+          error: "User already exists",
+        });
+      console.log("User created");
+
+      // Encrypting password
+      const hashedPassword = await bcrypt.hash(req.body.password, 10);
+
       const user = new User({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
@@ -49,19 +72,11 @@ export const createUser = [
         },
         email: req.body.email,
         phone: req.body.phone,
+        password: hashedPassword,
       });
 
-      // If existing user, return an error
-      const existingUser = await User.findOne({ email: user.email });
-      if (existingUser)
-        return res.json({
-          typeError: "existingUser",
-          ok: false,
-          error: "User already exists",
-        });
-
       // If unique user, save in mongoDB
-      user.save((error) => {
+      await user.save((error) => {
         if (error) return next(error);
         res
           .status(200)
