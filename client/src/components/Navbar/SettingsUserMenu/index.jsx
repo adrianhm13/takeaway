@@ -10,7 +10,7 @@ import {
   IconButton,
 } from "@mui/material";
 
-export default function SettingsUserMenu(props) {
+export default function SettingsUserMenu({ user, logout }) {
   const [anchorElUser, setAnchorElUser] = useState(null);
 
   const handleOpenUserMenu = (event) => {
@@ -19,11 +19,11 @@ export default function SettingsUserMenu(props) {
 
   return (
     <Box>
-      <Tooltip title={`Check your profile ${props.user.displayName}`}>
+      <Tooltip title={`Check your profile ${user.result.givenName}`}>
         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
           <Avatar
-            alt={props.user.displayName}
-            src="/static/images/avatar/2.jpg"
+            alt={user.result.givenName}
+            src={user.result.imageUrl}
           />
         </IconButton>
       </Tooltip>
@@ -42,7 +42,7 @@ export default function SettingsUserMenu(props) {
         <MenuItem onClick={() => setAnchorElUser(null)}>
           <Typography textAlign="center">Orders</Typography>
         </MenuItem>
-        <MenuItem onClick={() => {}}>
+        <MenuItem onClick={logout}>
           <Typography textAlign="center">Logout</Typography>
         </MenuItem>
       </Menu>

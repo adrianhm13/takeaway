@@ -1,23 +1,54 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { GoogleLogin } from "react-google-login";
+import { useDispatch } from "react-redux";
+import { useLogin } from "../../hooks/useLogin";
+import { AuthContext } from "../../context/AuthContext";
 
-import { Backdrop, Box, Modal, Fade, Typography, Button } from "@mui/material";
+import {
+  Backdrop,
+  Box,
+  Modal,
+  Fade,
+  Typography,
+  Button,
+  Stack,
+} from "@mui/material";
 import * as Styled from "./style";
 import LoginForm from "./LoginForm";
-import { useLogin } from "../../hooks/useLogin";
+import Icon from "./icon";
 
 export default function ModalLogin(props) {
   const { openLogin, onOpenLogin } = props;
-
   const [formData, setFormData] = useState({ username: "", password: "" });
 
-  const { login, error } = useLogin();
+  // const { login, error, user } = useLogin();
+  const dispatch = useDispatch();
+
+  // const test = useContext(AuthContext);
+  // console.log("Auth Context", test);
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    const response = await login(formData);
-    if (response.ok) {
-      onOpenLogin(false);
+    // e.preventDefault();
+    // const response = await login(formData);
+    // if (response.ok) {
+    //   onOpenLogin(false);
+    // }
+  };
+
+  const googleSuccess = async (res) => {
+    const result = res?.profileObj;
+    const token = res?.tokenId;
+
+    try {
+      dispatch({ type: "AUTH", data: { result, token } });
+      onOpenLogin(false)
+    } catch (error) {
+      console.log(error);
     }
+  };
+  const googleFailure = (error) => {
+    console.log(error);
+    console.log("Google Sign In was unsuccessful. Try Again Later");
   };
 
   return (
@@ -43,18 +74,38 @@ export default function ModalLogin(props) {
           <LoginForm
             formData={formData}
             setFormData={setFormData}
-            error={error}
+            error={'error'}
             handleSubmit={handleSubmit}
           />
-          <Button
-            sx={{ marginTop: 1 }}
-            variant="contained"
-            color="secondary"
-            type="submit"
-            form="login-form"
-          >
-            LOGIN
-          </Button>
+          <Stack>
+            <Button
+              sx={{ marginTop: 1 }}
+              variant="contained"
+              color="secondary"
+              type="submit"
+              form="login-form"
+            >
+              LOGIN
+            </Button>
+            <GoogleLogin
+              clientId="464067187874-g5r9mtjq5fbjlku5ubassc3snbe15koh.apps.googleusercontent.com"
+              render={(renderProps) => (
+                <Button
+                  sx={{ marginTop: 1 }}
+                  variant="contained"
+                  color="secondary"
+                  onClick={renderProps.onClick}
+                  disabled={renderProps.disabled}
+                  startIcon={<Icon />}
+                >
+                  GOOGLE SIGN IN
+                </Button>
+              )}
+              onSuccess={googleSuccess}
+              onFailure={googleFailure}
+              cookiePolicy="single_host_origin"
+            />
+          </Stack>
         </Box>
       </Fade>
     </Modal>
