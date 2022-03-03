@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { loginUser } from "../api";
-import { AUTH } from "../constants/actionTypes";
 import { useDispatch } from "react-redux";
+import { authAction } from "../redux/actions/auth";
 
 export const useLogin = () => {
   const [error, setError] = useState(null);
@@ -16,7 +16,7 @@ export const useLogin = () => {
     try {
       const { data } = await loginUser(user);
       if (data.user) {
-        dispatch({ type: AUTH, data });
+        dispatch(authAction(data));
 
         if (!isCancelled) {
           setIsPending(false);

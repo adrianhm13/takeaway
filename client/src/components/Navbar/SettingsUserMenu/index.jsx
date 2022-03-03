@@ -21,13 +21,13 @@ export default function SettingsUserMenu({ user, logout }) {
     <Box>
       <Tooltip
         title={`Check your profile ${
-          user?.firstName || user?.result?.givenName
+          user?.firstName || user?.givenName
         }`}
       >
         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
           <Avatar
-            alt={user?.result?.givenName || user?.firstName}
-            src={user?.result?.imageUrl}
+            alt={user?.givenName || user?.firstName}
+            src={user?.imageUrl}
           />
         </IconButton>
       </Tooltip>

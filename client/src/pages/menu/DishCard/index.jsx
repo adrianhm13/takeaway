@@ -34,6 +34,7 @@ export default function DishCard({ product }) {
               timeout="auto"
             >
               <DishOptions
+                id={product._id}
                 title={product.title}
                 price={product.price}
                 optionsDish={product.options}

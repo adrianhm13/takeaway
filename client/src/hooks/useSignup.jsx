@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 import { createUser } from "../api";
 import { useDispatch } from "react-redux";
-import { AUTH } from "../constants/actionTypes";
+import { authAction } from "../redux/actions/auth";
 
 export const useSignup = () => {
   const [isCancelled, setIsCancelled] = useState(false);
   const [error, setError] = useState(null);
   const [isPending, setIsPending] = useState(false);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const signup = async (formData) => {
     setIsPending(true);
@@ -16,7 +16,7 @@ export const useSignup = () => {
       const { data } = await createUser(formData);
       console.log(data);
 
-      dispatch({ type: AUTH, data });
+      dispatch(authAction(data));
 
       if (!isCancelled) {
         setIsPending(false);

@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 // import { CartContext } from "../../../../context/CartContext";
 
 //Components
@@ -19,14 +20,16 @@ import RemoveIcon from "@mui/icons-material/Remove";
 
 //Style
 import * as Styled from "./style";
+import { addItemAction } from "../../../../redux/actions/cart";
 
 export function DishOptions(props) {
-  const { price, optionsDish, onExpanded, title } = props;
+  const { id, price, optionsDish, onExpanded, title } = props;
 
   const [quantity, setQuantity] = useState(1);
   const [total, setTotal] = useState(price);
   const [options, setOptions] = useState([]);
 
+  const dispatch = useDispatch();
   const uniqueId = Math.random().toString(16).slice(2);
 
   // const { dispatch } = useContext(CartContext);
@@ -39,6 +42,8 @@ export function DishOptions(props) {
       options.push(key);
     }
     setOptions(optionsChoosen);
+    console.log('title', title)
+    dispatch(addItemAction({ id, title, price, priceTotal: total, qty: quantity, options}));
     // dispatch({
     //   type: "ADD_ITEM",
     //   payload: {
