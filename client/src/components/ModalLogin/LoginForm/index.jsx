@@ -12,12 +12,12 @@ export default function LoginForm({
         <TextField
           id="outlined-email"
           label="Email"
-          value={formData.username}
+          value={formData.email}
           required
           type="email"
           color="secondary"
           variant="outlined"
-          onChange={(e) => setFormData({ ...formData, username: e.target.value })}
+          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
         />
         <TextField
           id="outlined-password"

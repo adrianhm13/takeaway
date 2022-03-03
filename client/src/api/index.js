@@ -1,19 +1,18 @@
 import axios from "axios";
 
-const url = `http://localhost:5000`;
-let endpoint;
+const API = axios.create({ baseURL: "http://localhost:5000" });
 
-export const fetchProducts = () => {
-  endpoint = "/menu";
-  return axios.get(`${url}${endpoint}`);
-};
+API.interceptors.request.use((req) => {
+  if (localStorage.getItem("profile")) {
+    req.headers.authorization = `Bearer ${
+      JSON.parse(localStorage.getItem("profile")).token
+    }`;
+  }
 
-export const createUser = (newUser) => {
-  endpoint = "/users/sign-up";
-  return axios.post(`${url}${endpoint}`, newUser);
-};
+  return req;
+});
 
-export const loginUser = (user) => {
-  endpoint = "/users/login"
-  return axios.post(`${url}${endpoint}`, user)
-};
+export const fetchProducts = () => API.get("/menu");
+
+export const createUser = (newUser) => API.post("/users/sign-up", newUser);
+export const loginUser = (user) => API.post("/users/login", user);

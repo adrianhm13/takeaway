@@ -1,8 +1,7 @@
-import { useContext, useEffect, useState } from "react";
+import { useState } from "react";
 import { GoogleLogin } from "react-google-login";
 import { useDispatch } from "react-redux";
 import { useLogin } from "../../hooks/useLogin";
-import { AuthContext } from "../../context/AuthContext";
 
 import {
   Backdrop,
@@ -17,35 +16,31 @@ import * as Styled from "./style";
 import LoginForm from "./LoginForm";
 import Icon from "./icon";
 
-export default function ModalLogin(props) {
-  const { openLogin, onOpenLogin } = props;
-  const [formData, setFormData] = useState({ username: "", password: "" });
+export default function ModalLogin({ openLogin, onOpenLogin }) {
+  const [formData, setFormData] = useState({ email: "", password: "" });
 
-  // const { login, error, user } = useLogin();
+  const { login, error } = useLogin();
   const dispatch = useDispatch();
 
-  // const test = useContext(AuthContext);
-  // console.log("Auth Context", test);
-
-  const handleSubmit = async (e) => {
-    // e.preventDefault();
-    // const response = await login(formData);
-    // if (response.ok) {
-    //   onOpenLogin(false);
-    // }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    login(formData);
   };
 
+  // Google access
   const googleSuccess = async (res) => {
     const result = res?.profileObj;
     const token = res?.tokenId;
 
     try {
       dispatch({ type: "AUTH", data: { result, token } });
-      onOpenLogin(false)
+      console.log("lala");
+      onOpenLogin(false);
     } catch (error) {
       console.log(error);
     }
   };
+
   const googleFailure = (error) => {
     console.log(error);
     console.log("Google Sign In was unsuccessful. Try Again Later");
@@ -74,7 +69,7 @@ export default function ModalLogin(props) {
           <LoginForm
             formData={formData}
             setFormData={setFormData}
-            error={'error'}
+            error={error}
             handleSubmit={handleSubmit}
           />
           <Stack>

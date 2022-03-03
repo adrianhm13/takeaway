@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { loginUser } from "../api";
+import { AUTH } from "../constants/actionTypes";
+import { useDispatch } from "react-redux";
 
 export const useLogin = () => {
-  const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
   const [isPending, setIsPending] = useState(false);
   const [isCancelled, setIsCancelled] = useState(false);
+  const dispatch = useDispatch();
 
   const login = async (user) => {
     setError(null);
@@ -13,30 +15,28 @@ export const useLogin = () => {
     setIsCancelled(false);
     try {
       const { data } = await loginUser(user);
-
-      if (data.ok) {
-        setUser(data.user);
+      if (data.result) {
+        dispatch({ type: AUTH, data });
 
         if (!isCancelled) {
           setIsPending(false);
           setError(null);
         }
-        return { ok: true };
       } else {
         throw new Error(data.message);
       }
     } catch (error) {
       if (!isCancelled) {
+        const { errorMessage } = error.response.data;
         setIsPending(false);
-        setError(error.message);
-        return { ok: false };
+        setError(errorMessage);
       }
     }
   };
-
+  //Cleanup function in case the async function it's active while the component it's unmounted
   useEffect(() => {
     return () => setIsCancelled(true);
   }, []);
 
-  return { user, error, login, isPending };
+  return { error, login, isPending };
 };

@@ -14,9 +14,6 @@ export default function Navbar() {
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.auth.authData);
 
-  console.log(userData);
-  console.log(user);
-
   useEffect(() => {
     // const token = user?.token;
     //JWT

@@ -11,17 +11,10 @@ export const useSignup = () => {
     setIsCancelled(false);
     try {
       const { data } = await createUser(formData);
-      console.log(data);
-      if (!data.ok) {
-        if (data.typeError === "validation") {
-          data.errors.forEach((error) => {
-            throw new Error(error.msg);
-          });
-        }
-        if (data.typeError === "existingUser") {
-          throw new Error("User already exists");
-        }
-      }
+      console.log(data)
+
+      // if (data.ok) dispatch({ type: AUTH, data });
+
       if (!isCancelled) {
         setIsPending(false);
         setError(null);
@@ -29,9 +22,11 @@ export const useSignup = () => {
       return data;
     } catch (error) {
       if (!isCancelled) {
+        const { errorMessage } = error.response.data;
+        console.log(errorMessage);
         setIsPending(false);
-        setError(error.message);
-        return { response: { ok: false } };
+        setError(errorMessage);
+        return { ok: false };
       }
     }
   };

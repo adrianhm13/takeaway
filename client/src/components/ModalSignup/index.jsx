@@ -24,14 +24,15 @@ const initialData = {
 
 export default function ModalSignup({ onOpenSignup, openSignup }) {
   const [formData, setFormData] = useState(initialData);
+
   const { error, signup } = useSignup();
 
   const handleClose = () => onOpenSignup(false);
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await signup(formData);
-    if (response.ok) {
+    const data = await signup(formData);
+    if (data.ok) {
       onOpenSignup(false);
     }
   };
