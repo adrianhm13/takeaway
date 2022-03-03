@@ -29,12 +29,11 @@ export default function ModalLogin({ openLogin, onOpenLogin }) {
 
   // Google access
   const googleSuccess = async (res) => {
-    const result = res?.profileObj;
+    const user = res?.profileObj;
     const token = res?.tokenId;
 
     try {
-      dispatch({ type: "AUTH", data: { result, token } });
-      console.log("lala");
+      dispatch({ type: "AUTH", data: { user, token } });
       onOpenLogin(false);
     } catch (error) {
       console.log(error);

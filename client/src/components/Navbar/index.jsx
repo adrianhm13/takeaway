@@ -10,19 +10,20 @@ import { AppBar, Toolbar, Container } from "@mui/material";
 
 export default function Navbar() {
   const [anchorElNav, setAnchorElNav] = useState(null);
-  const [user, setUser] = useState(null);
+  const [userData, setUserData] = useState(null);
   const dispatch = useDispatch();
-  const userData = useSelector((state) => state.auth.authData);
+  const authData = useSelector((state) => state.auth.authData);
+  console.log(authData);
 
   useEffect(() => {
     // const token = user?.token;
     //JWT
-    setUser(JSON.parse(localStorage.getItem("profile")));
-  }, [userData]);
+    setUserData(JSON.parse(localStorage.getItem("profile")));
+  }, [authData]);
 
   const logout = () => {
     dispatch({ type: "LOGOUT" });
-    setUser(null);
+    setUserData(null);
   };
 
   const handleOpenNavMenu = (e) => {
@@ -41,8 +42,8 @@ export default function Navbar() {
           />
           <LogoPhone />
           <NavMenuPages />
-          {user && <SettingsUserMenu user={user} logout={logout} />}
-          {!user && <SignInMenu />}
+          {userData && <SettingsUserMenu user={userData.user} logout={logout} />}
+          {!userData && <SignInMenu />}
         </Toolbar>
       </Container>
     </AppBar>

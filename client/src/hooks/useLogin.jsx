@@ -15,7 +15,7 @@ export const useLogin = () => {
     setIsCancelled(false);
     try {
       const { data } = await loginUser(user);
-      if (data.result) {
+      if (data.user) {
         dispatch({ type: AUTH, data });
 
         if (!isCancelled) {

@@ -20,9 +20,9 @@ export const loginUser = async (req, res, next) => {
   try {
     const existingUser = await User.findOne({ email });
     if (!existingUser) {
-      const error = new Error("User doesn't exist")
-      error.status = 404
-      throw error
+      const error = new Error("User doesn't exist");
+      error.status = 404;
+      throw error;
     }
     const isPasswordCorrect = await bcrypt.compare(
       password,
@@ -30,9 +30,9 @@ export const loginUser = async (req, res, next) => {
     );
 
     if (!isPasswordCorrect) {
-      const error = new Error("Invalid password")
-      error.status = 403
-      throw error
+      const error = new Error("Invalid password");
+      error.status = 403;
+      throw error;
     }
 
     const token = jwt.sign(
@@ -44,9 +44,9 @@ export const loginUser = async (req, res, next) => {
       "test",
       { expiresIn: "1h" }
     );
-    res.status(200).json({ result: existingUser, token });
+    res.status(200).json({ user: existingUser, token });
   } catch (error) {
-    return next(error)
+    return next(error);
   }
 };
 
@@ -112,12 +112,7 @@ export const createUser = [
             expiresIn: "1h",
           }
         );
-        res.status(200).json({
-          ok: true,
-          message: "User created successfully",
-          user,
-          token,
-        });
+        res.status(200).json({ user, token });
       });
     } catch (error) {
       return next(error);
