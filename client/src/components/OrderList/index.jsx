@@ -13,19 +13,6 @@ import { List, Button, Divider, Typography } from "@mui/material";
 import { ItemCart } from "./ItemCart";
 
 export function OrderList() {
-  // //If qty its 0, deletes the item
-  // useEffect(() => {
-  //   const itemToDelete = orders.listItems.find(
-  //     (item) => item.qty === 0
-  //   );
-  //   if (itemToDelete) {
-  //     const updatedListItems = orders.listItems.filter(
-  //       (item) => itemToDelete !== item
-  //     );
-  //     dispatch({ type: "DELETE_ITEM", payload: updatedListItems });
-  //   }
-  // }, [orders.listItems, dispatch]);
-
   const dispatch = useDispatch();
   const { orderList, total } = useSelector((state) => state.cart);
 
