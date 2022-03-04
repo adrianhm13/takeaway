@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-// import { CartContext } from "../../../../context/CartContext";
+import { addItemAction } from "../../../../redux/actions/cart";
 
 //Components
 import {
@@ -20,7 +20,6 @@ import RemoveIcon from "@mui/icons-material/Remove";
 
 //Style
 import * as Styled from "./style";
-import { addItemAction } from "../../../../redux/actions/cart";
 
 export function DishOptions(props) {
   const { id, price, optionsDish, onExpanded, title } = props;
@@ -30,9 +29,9 @@ export function DishOptions(props) {
   const [options, setOptions] = useState([]);
 
   const dispatch = useDispatch();
-  const uniqueId = Math.random().toString(16).slice(2);
 
-  // const { dispatch } = useContext(CartContext);
+  // Unique temp ID for each product in the orderlist,
+  const uniqueId = Math.random().toString(16).slice(2);
 
   const handleSubmit = (e) => {
     const formData = new FormData(e.currentTarget);
@@ -42,19 +41,17 @@ export function DishOptions(props) {
       options.push(key);
     }
     setOptions(optionsChoosen);
-    console.log('title', title)
-    dispatch(addItemAction({ id, title, price, priceTotal: total, qty: quantity, options}));
-    // dispatch({
-    //   type: "ADD_ITEM",
-    //   payload: {
-    //     id: uniqueId,
-    //     title: title,
-    //     price: price,
-    //     priceTotal: total,
-    //     qty: quantity,
-    //     options,
-    //   },
-    // });
+    dispatch(
+      addItemAction({
+        id,
+        tempId: uniqueId,
+        title,
+        price,
+        priceTotal: total,
+        qty: quantity,
+        options,
+      })
+    );
     onExpanded(!onExpanded);
   };
 
@@ -104,7 +101,6 @@ export function DishOptions(props) {
 
 function FormOptions(props) {
   const { uniqueId, handleSubmit, optionsDish } = props;
-  console.log(uniqueId);
   return (
     <FormControl sx={{ m: 3 }} component="fieldset" variant="standard">
       <FormLabel component="legend">Pick your options</FormLabel>

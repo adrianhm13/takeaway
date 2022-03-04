@@ -1,7 +1,6 @@
-import { useContext, useEffect } from "react";
-
-//Types
-// import { CartContext } from "../../context/CartContext";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { updateTotalAction, deleteItemAction } from "../../redux/actions/cart";
 
 //Icons
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
@@ -14,9 +13,6 @@ import { List, Button, Divider, Typography } from "@mui/material";
 import { ItemCart } from "./ItemCart";
 
 export function OrderList() {
-  // // const { state: orders, dispatch } = useContext(CartContext);
-  // const { listItems } = orders;
-
   // //If qty its 0, deletes the item
   // useEffect(() => {
   //   const itemToDelete = orders.listItems.find(
@@ -30,18 +26,19 @@ export function OrderList() {
   //   }
   // }, [orders.listItems, dispatch]);
 
-  // // Update cart's total
-  // useEffect(() => {
-  //   if (orders.listItems.length !== 0) {
-  //     const totalCart = orders.listItems.reduce(
-  //       (acc, item) => {
-  //         return acc + item.priceTotal;
-  //       },
-  //       0
-  //     );
-  //     dispatch({ type: "UPDATE_TOTAL", payload: totalCart });
-  //   }
-  // }, [orders.listItems, dispatch]);
+  const dispatch = useDispatch();
+  const { orderList, total } = useSelector((state) => state.cart);
+
+  // Update total cost of order
+  useEffect(() => {
+    dispatch(updateTotalAction());
+  }, [orderList, dispatch]);
+
+  // Delete item if quantity it's 0
+  useEffect(() => {
+    const deleteItem = [...orderList].find((item) => item.qty === 0);
+    if (deleteItem) dispatch(deleteItemAction(deleteItem));
+  }, [orderList, dispatch]);
 
   return (
     <List sx={Styled.ListContainer}>
@@ -49,17 +46,17 @@ export function OrderList() {
         Your order
       </Typography>
       <Divider />
-      {/* {listItems &&
-        listItems.map((item) => (
-          <ItemCart item={item} key={item.id} dispatch={dispatch} orders={orders} />
-        ))} */}
+      {orderList &&
+        orderList.map((item) => (
+          <ItemCart item={item} key={item.tempId} dispatch={dispatch} />
+        ))}
       <Divider />
       <Button
         sx={{ mt: 1 }}
         startIcon={<ShoppingBasketIcon />}
         variant="contained"
       >
-        {/* Total ${orders.total}.00 */}
+        Total ${total}.00
       </Button>
     </List>
   );

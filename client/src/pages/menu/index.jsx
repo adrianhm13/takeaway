@@ -2,11 +2,12 @@ import { useGetProducts } from "../../hooks/useGetProducts";
 
 //Components
 import DishCard from "./DishCard";
-import { Box, Container } from "@mui/material";
+import Box from "@mui/material/Box"
+import Container from "@mui/material/Container"
 import { DrawerDesktop } from "./DrawerDesktop";
 import { DrawerPhone } from "./DrawerPhone";
 
-//Style
+// Styles
 import * as Styled from "./style";
 
 export default function Menu() {
