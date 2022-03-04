@@ -1,5 +1,5 @@
-import React, { useContext, useState } from "react";
-// import { CartContext } from "../../../context/CartContext";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
 
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 import { Badge, Button, Drawer } from "@mui/material";
@@ -8,7 +8,8 @@ import * as Styled from "./style";
 
 export function DrawerPhone() {
   const [isOpen, setIsOpen] = useState(false);
-  // const { state: orders } = useContext(CartContext);
+  const { orderList } = useSelector((state) => state.cart);
+
   return (
     <>
       <Drawer anchor="bottom" open={isOpen} onClose={() => setIsOpen(false)}>
@@ -19,7 +20,7 @@ export function DrawerPhone() {
         onClick={() => setIsOpen(true)}
         sx={Styled.CartButton}
       >
-        <Badge badgeContent={0} color="secondary">
+        <Badge badgeContent={orderList.length} color="secondary">
           <ShoppingBasketIcon />
         </Badge>
         Cart
