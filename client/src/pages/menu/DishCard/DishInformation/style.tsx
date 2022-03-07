@@ -1,7 +1,11 @@
 import { styled } from "@mui/material/styles";
-import IconButton from "@mui/material/IconButton";
+import IconButton, { IconButtonProps } from "@mui/material/IconButton";
 
-export const ExpandMore = styled((props) => {
+interface ExpandMoreProps extends IconButtonProps {
+  expand: boolean;
+}
+
+export const ExpandMore = styled((props: ExpandMoreProps) => {
   const { expand, ...other } = props;
   return <IconButton disabled {...other} />;
 })(({ theme, expand }) => ({

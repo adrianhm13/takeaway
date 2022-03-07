@@ -1,9 +1,6 @@
 // import { CartState, CartAction } from "../../../context/CartContext";
-import { useDispatch } from "react-redux";
-import {
-  increaseQtyAction,
-  decreaseQtyAction,
-} from "../../../redux/actions/cart";
+import { useAppDispatch } from "../../../app/hooks";
+import { increaseQty, decreaseQty } from "../../../features/cart/cartSlice";
 
 //Icons
 import AddIcon from "@mui/icons-material/Add";
@@ -16,11 +13,8 @@ import * as Styled from "./style";
 import { Button, Box, ListItem, Typography, ButtonGroup } from "@mui/material";
 
 export function ItemCart({ item }) {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const handleDecrease = (id) => dispatch(decreaseQtyAction(id));
-  const handleIncrease = (id) => dispatch(increaseQtyAction(id));
-  
   return (
     <ListItem divider sx={Styled.ListItem}>
       <Typography variant={"subtitle1"}>{item.title}</Typography>
@@ -29,11 +23,11 @@ export function ItemCart({ item }) {
       </Typography>
       <Box sx={Styled.QuantityPrice}>
         <ButtonGroup variant="text" color="secondary" size="small">
-          <Button onClick={() => handleDecrease(item.tempId)}>
+          <Button onClick={() => dispatch(decreaseQty(item.tempId))}>
             <RemoveIcon />
           </Button>
           <Button disabled>{item.qty}</Button>
-          <Button onClick={() => handleIncrease(item.tempId)}>
+          <Button onClick={() => dispatch(increaseQty(item.tempId))}>
             <AddIcon />
           </Button>
         </ButtonGroup>

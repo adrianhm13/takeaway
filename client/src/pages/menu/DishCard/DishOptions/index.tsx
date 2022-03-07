@@ -1,6 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { addItemAction } from "../../../../redux/actions/cart";
+import { useEffect, useState } from "react";
+import { useAppDispatch } from "../../../../app/hooks";
+import { addProduct } from "../../../../features/cart/cartSlice";
+
+//Types
+import { Product } from "../../../../features/api/apiSliceTypes";
 
 //Components
 import {
@@ -21,35 +24,41 @@ import RemoveIcon from "@mui/icons-material/Remove";
 //Style
 import * as Styled from "./style";
 
-export function DishOptions(props) {
+type DishOptionsProps = {
+  title: Product["title"];
+  id: Product["_id"];
+  price: Product["price"];
+  optionsDish: Product["options"];
+  onExpanded: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+export function DishOptions(props: DishOptionsProps) {
   const { id, price, optionsDish, onExpanded, title } = props;
 
   const [quantity, setQuantity] = useState(1);
   const [total, setTotal] = useState(price);
-  const [options, setOptions] = useState([]);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   // Unique temp ID for each product in the orderlist,
   const uniqueId = Math.random().toString(16).slice(2);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
     const formData = new FormData(e.currentTarget);
     e.preventDefault();
-    let optionsChoosen = [];
+    let optionsChoosen: string[] = [];
     for (let [key] of formData.entries()) {
-      options.push(key);
+      optionsChoosen.push(key);
     }
-    setOptions(optionsChoosen);
     dispatch(
-      addItemAction({
+      addProduct({
         id,
         tempId: uniqueId,
         title,
         price,
         priceTotal: total,
         qty: quantity,
-        options,
+        options: optionsChoosen,
       })
     );
     onExpanded(!onExpanded);
@@ -99,7 +108,13 @@ export function DishOptions(props) {
   );
 }
 
-function FormOptions(props) {
+type FormOptionsProps = {
+  uniqueId: string;
+  handleSubmit: (e: React.ChangeEvent<HTMLFormElement>) => void;
+  optionsDish: Product["options"];
+};
+
+function FormOptions(props: FormOptionsProps) {
   const { uniqueId, handleSubmit, optionsDish } = props;
   return (
     <FormControl sx={{ m: 3 }} component="fieldset" variant="standard">
@@ -115,7 +130,11 @@ function FormOptions(props) {
   );
 }
 
-function OptionCheckbox({ optionDish }) {
+type OptionCheckboxProps = {
+  optionDish: string;
+};
+
+function OptionCheckbox({ optionDish }: OptionCheckboxProps) {
   return (
     <FormControlLabel
       control={

@@ -1,6 +1,6 @@
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { updateTotalAction, deleteItemAction } from "../../redux/actions/cart";
+import { useAppSelector, useAppDispatch } from "../../app/hooks";
+import { deleteProduct, updateTotalOrder } from "../../features/cart/cartSlice";
 
 //Icons
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
@@ -13,18 +13,20 @@ import { List, Button, Divider, Typography } from "@mui/material";
 import { ItemCart } from "./ItemCart";
 
 export function OrderList() {
-  const dispatch = useDispatch();
-  const { orderList, total } = useSelector((state) => state.cart);
+  const { orderList, orderTotal } = useAppSelector((state) => state.cart);
+  const dispatch = useAppDispatch();
 
   // Update total cost of order
   useEffect(() => {
-    dispatch(updateTotalAction());
+    dispatch(updateTotalOrder());
   }, [orderList, dispatch]);
 
   // Delete item if quantity it's 0
   useEffect(() => {
-    const deleteItem = [...orderList].find((item) => item.qty === 0);
-    if (deleteItem) dispatch(deleteItemAction(deleteItem));
+    const deleteItem = orderList.find((item) => item.qty === 0);
+    if (deleteItem) {
+      dispatch(deleteProduct(deleteItem.tempId));
+    }
   }, [orderList, dispatch]);
 
   return (
@@ -34,16 +36,14 @@ export function OrderList() {
       </Typography>
       <Divider />
       {orderList &&
-        orderList.map((item) => (
-          <ItemCart item={item} key={item.tempId} dispatch={dispatch} />
-        ))}
+        orderList.map((item) => <ItemCart item={item} key={item.tempId} />)}
       <Divider />
       <Button
         sx={{ mt: 1 }}
         startIcon={<ShoppingBasketIcon />}
         variant="contained"
       >
-        Total ${total}.00
+        Total ${orderTotal}.00
       </Button>
     </List>
   );

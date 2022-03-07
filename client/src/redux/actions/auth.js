@@ -1,4 +1,4 @@
-import { AUTH, LOGOUT } from "../../constants/actionTypes";
+// import { AUTH, LOGOUT } from "../../constants/actionTypes";
 
-export const authAction = (data) => ({ type: AUTH, data });
-export const logoutAction = () => ({ type: LOGOUT });
+// export const authAction = (data) => ({ type: AUTH, data });
+// export const logoutAction = () => ({ type: LOGOUT });

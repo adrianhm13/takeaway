@@ -9,4 +9,4 @@ export const ModalLoginContent = {
     width: { xs: "240px", sm: "400px" },
     p: 4,
     borderRadius: "5px",
-  };
+  } as const

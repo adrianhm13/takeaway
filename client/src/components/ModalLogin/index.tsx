@@ -1,7 +1,13 @@
 import { useState } from "react";
-import { GoogleLogin } from "react-google-login";
+import {
+  GoogleLogin,
+  GoogleLoginResponse,
+  GoogleLoginResponseOffline,
+} from "react-google-login";
 import { useDispatch } from "react-redux";
-import { useLogin } from "../../hooks/useLogin";
+import { useLoginMutation } from "../../features/api/apiSlice";
+import { LoginRequest } from "../../features/api/apiSliceTypes";
+import { setCredentials } from "../../features/auth/authSlice";
 
 import {
   Backdrop,
@@ -16,22 +22,45 @@ import * as Styled from "./style";
 import LoginForm from "./LoginForm";
 import Icon from "./icon";
 
-export default function ModalLogin({ openLogin, onOpenLogin }) {
-  const [formData, setFormData] = useState({ email: "", password: "" });
+type ModalLoginProps = {
+  openLogin: boolean;
+  onOpenLogin: React.Dispatch<React.SetStateAction<boolean>>;
+};
 
-  const { login, error } = useLogin();
+export default function ModalLogin(props: ModalLoginProps) {
+  const { openLogin, onOpenLogin } = props;
+  const [error, setError] = useState<string | undefined>("");
+  const [formData, setFormData] = useState<LoginRequest>({
+    email: "",
+    password: "",
+  });
+  const [login, { isLoading }] = useLoginMutation();
   const dispatch = useDispatch();
 
-  const handleSubmit = (e) => {
+  // Login with email and password
+  const handleSubmit: (
+    e: React.FormEvent<HTMLFormElement>
+  ) => Promise<void> = async (e) => {
     e.preventDefault();
-    login(formData);
+    try {
+      const user = await login(formData).unwrap();
+      console.log(user);
+      dispatch(setCredentials(user));
+    } catch (error) {
+      setError(error.data.errorMessage);
+    }
   };
 
   // Google access
-  const googleSuccess = async (res) => {
-    const user = res?.profileObj;
-    const token = res?.tokenId;
-
+  const googleSuccess = async (
+    response: GoogleLoginResponse | GoogleLoginResponseOffline
+  ) => {
+    let user;
+    let token;
+    if ("profileObj" && "tokenId" in response) {
+      user = response.profileObj;
+      token = response.tokenId;
+    }
     try {
       dispatch({ type: "AUTH", data: { user, token } });
       onOpenLogin(false);
@@ -40,7 +69,7 @@ export default function ModalLogin({ openLogin, onOpenLogin }) {
     }
   };
 
-  const googleFailure = (error) => {
+  const googleFailure = (error: GoogleLoginResponse) => {
     console.log(error);
     console.log("Google Sign In was unsuccessful. Try Again Later");
   };

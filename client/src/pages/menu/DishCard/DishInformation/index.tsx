@@ -2,8 +2,21 @@ import React from "react";
 import { Box, Typography, CardHeader } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { ExpandMore } from "./style";
+import { Product } from "../../../../features/api/apiSliceTypes";
 
-export function DishInformation({ title, description, price, isExpanded }) {
+type DishInformationProps = {
+  title: Product["title"];
+  description: Product["description"];
+  price: Product["price"];
+  isExpanded: boolean;
+};
+
+export function DishInformation({
+  title,
+  description,
+  price,
+  isExpanded,
+}: DishInformationProps) {
   return (
     <>
       <CardHeader title={title} subheader={description} />
