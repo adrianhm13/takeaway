@@ -1,4 +1,7 @@
+// Components
 import Typography from "@mui/material/Typography";
+
+// Styles
 import * as Styled from "./style";
 
 export default function LogoDesktop() {

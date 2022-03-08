@@ -1,18 +1,19 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
+// Components
 import ModalLogin from "../../ModalLogin";
 import ModalSignup from "../../ModalSignup";
 import { Menu, Button, MenuItem } from "@mui/material";
 
 export default function SignInMenu() {
-  const [anchorEl, setAnchorEl] = useState(null);
+  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const [openLogin, setOpenLogin] = useState(false);
   const [openSignup, setOpenSignup] = useState(false);
 
   const open = Boolean(anchorEl);
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
+  const handleClick = (e: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(e.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);

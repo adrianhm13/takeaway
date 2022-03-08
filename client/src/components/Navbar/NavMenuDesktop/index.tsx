@@ -1,6 +1,9 @@
 import { NavLink as RouterLink } from "react-router-dom";
 
+// Components
 import {Box, Button} from "@mui/material"
+
+// Styles
 import * as Styled from "./style";
 
 export default function NavMenuDesktop() {

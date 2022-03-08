@@ -1,5 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
+// Types
+import { User } from "../../../features/api/apiSliceTypes";
+
+// Components
 import {
   Box,
   Menu,
@@ -10,25 +14,23 @@ import {
   IconButton,
 } from "@mui/material";
 
-export default function SettingsUserMenu({ user, logout }) {
-  const [anchorElUser, setAnchorElUser] = useState(null);
+type SettingsUserMenuProps = {
+  user: User;
+  logout: () => void;
+};
+export default function SettingsUserMenu(props: SettingsUserMenuProps) {
+  const { user, logout } = props;
+  const [anchorElUser, setAnchorElUser] = useState<HTMLElement | null>(null);
 
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget); //Ref for menu's position
+  const handleOpenUserMenu = (e: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorElUser(e.currentTarget); //Ref for menu's position
   };
-  console.log(user);
+
   return (
     <Box>
-      <Tooltip
-        title={`Check your profile ${
-          user?.firstName || user?.givenName
-        }`}
-      >
+      <Tooltip title={`Check your profile ${user.firstName}`}>
         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-          <Avatar
-            alt={user?.givenName || user?.firstName}
-            src={user?.imageUrl}
-          />
+          <Avatar alt={user.firstName} src="image" />
         </IconButton>
       </Tooltip>
       <Menu

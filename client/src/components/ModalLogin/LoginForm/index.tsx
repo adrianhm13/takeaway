@@ -1,6 +1,7 @@
+// Components
 import { TextField, Stack } from "@mui/material";
-import { SerializedError } from "@reduxjs/toolkit";
-import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
+
+// Types
 import { LoginRequest } from "../../../features/api/apiSliceTypes";
 
 type LoginFormProps = {

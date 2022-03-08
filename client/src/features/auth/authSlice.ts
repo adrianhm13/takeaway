@@ -17,8 +17,35 @@ const authSlice = createSlice({
       state.user = action.payload.user;
       state.token = action.payload.token;
     },
+    saveProfileLocal: (
+      state,
+      action: PayloadAction<{ user: User; token: string }>
+    ) => {
+      localStorage.setItem("profile", JSON.stringify({ ...state }));
+    },
+    getProfileLocal: (state) => {
+      const profileJSON = localStorage.getItem("profile");
+      if (profileJSON !== null) {
+        const profile: AuthState = JSON.parse(profileJSON);
+        state.user = profile.user;
+        state.token = profile.token;
+      }
+    },
+    logout: (state) => {
+      state.user = null;
+      state.token = null;
+    },
+    deleteProfileLocal: (state) => {
+      localStorage.clear();
+    },
   },
 });
 
-export const { setCredentials} = authSlice.actions
-export default authSlice.reducer 
+export const {
+  setCredentials,
+  saveProfileLocal,
+  logout,
+  deleteProfileLocal,
+  getProfileLocal,
+} = authSlice.actions;
+export default authSlice.reducer;

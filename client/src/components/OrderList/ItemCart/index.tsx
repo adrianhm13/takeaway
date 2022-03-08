@@ -1,6 +1,6 @@
 // import { CartState, CartAction } from "../../../context/CartContext";
 import { useAppDispatch } from "../../../app/hooks";
-import { increaseQty, decreaseQty } from "../../../features/cart/cartSlice";
+import { increaseQty, decreaseQty, OrderProduct } from "../../../features/cart/cartSlice";
 
 //Icons
 import AddIcon from "@mui/icons-material/Add";
@@ -12,7 +12,10 @@ import * as Styled from "./style";
 //Components
 import { Button, Box, ListItem, Typography, ButtonGroup } from "@mui/material";
 
-export function ItemCart({ item }) {
+type itemProps = {
+  item: OrderProduct
+}
+export function ItemCart({ item }: itemProps) {
   const dispatch = useAppDispatch();
 
   return (

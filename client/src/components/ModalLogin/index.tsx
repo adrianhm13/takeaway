@@ -6,9 +6,15 @@ import {
 } from "react-google-login";
 import { useDispatch } from "react-redux";
 import { useLoginMutation } from "../../features/api/apiSlice";
-import { LoginRequest } from "../../features/api/apiSliceTypes";
-import { setCredentials } from "../../features/auth/authSlice";
+import {
+  saveProfileLocal,
+  setCredentials,
+} from "../../features/auth/authSlice";
 
+// Types
+import { LoginRequest } from "../../features/api/apiSliceTypes";
+
+// Components
 import {
   Backdrop,
   Box,
@@ -18,9 +24,12 @@ import {
   Button,
   Stack,
 } from "@mui/material";
-import * as Styled from "./style";
 import LoginForm from "./LoginForm";
 import Icon from "./icon";
+
+// Styles
+import * as Styled from "./style";
+
 
 type ModalLoginProps = {
   openLogin: boolean;
@@ -46,6 +55,7 @@ export default function ModalLogin(props: ModalLoginProps) {
       const user = await login(formData).unwrap();
       console.log(user);
       dispatch(setCredentials(user));
+      dispatch(saveProfileLocal(user));
     } catch (error) {
       setError(error.data.errorMessage);
     }
@@ -62,10 +72,14 @@ export default function ModalLogin(props: ModalLoginProps) {
       token = response.tokenId;
     }
     try {
-      dispatch({ type: "AUTH", data: { user, token } });
+      // TODO
+      const TODO_GOOGLE =
+        "Convert google login info into a normal profile login";
+      console.log(TODO_GOOGLE);
+      // dispatch({ type: "AUTH", data: { user, token } });
       onOpenLogin(false);
     } catch (error) {
-      console.log(error);
+      setError(error);
     }
   };
 

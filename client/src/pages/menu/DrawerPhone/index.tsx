@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../../../app/hooks";
 
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 import { Badge, Button, Drawer } from "@mui/material";
@@ -8,7 +8,7 @@ import * as Styled from "./style";
 
 export function DrawerPhone() {
   const [isOpen, setIsOpen] = useState(false);
-  const { orderList } = useSelector((state) => state.cart);
+  const { orderList } = useAppSelector((state) => state.cart);
 
   return (
     <>

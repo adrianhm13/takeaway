@@ -8,4 +8,4 @@ export const ListContainer = {
   padding: 2,
   display: "flex",
   flexDirection: "column",
-};
+} as const;
