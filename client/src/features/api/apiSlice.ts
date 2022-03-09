@@ -4,7 +4,8 @@ import {
   UserResponse,
   LoginRequest,
   User,
-  RegisterRequest
+  RegisterRequest,
+  CreateOrderRequest,
 } from "./apiSlice.types";
 
 export const apiSlice = createApi({
@@ -28,6 +29,13 @@ export const apiSlice = createApi({
         body: registerForm,
       }),
     }),
+    createOrder: builder.mutation<string, CreateOrderRequest>({
+      query: (order) => ({
+        url: "/products",
+        method: "POST",
+        body: order,
+      }),
+    })
   }),
 });
 

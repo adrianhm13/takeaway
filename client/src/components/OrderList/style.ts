@@ -1,5 +1,4 @@
 export const ListContainer = {
-  overflow: "auto",
   marginTop: "70px",
   width: {
     xs: "auto",

@@ -41,3 +41,15 @@ export interface RegisterRequest
   town: string;
   zipCode: string;
 }
+
+export interface CreateOrderRequest {
+  client: Pick<User, "_id">;
+  order: Pick<OrderProduct, "id" | "options" | "priceTotal">[];
+  totalAmount: number;
+  paymentType: PaymentType;
+  deliverType: DeliverType;
+}
+
+export type PaymentType = "Card" | "Cash";
+
+export type DeliverType = "Pickup" | "Delivery";

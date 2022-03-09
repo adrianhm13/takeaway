@@ -13,10 +13,7 @@ import * as Styled from "./style";
 //Components
 import { Button, Box, ListItem, Typography, ButtonGroup } from "@mui/material";
 
-type itemProps = {
-  item: OrderProduct
-}
-export function ItemCart({ item }: itemProps) {
+export function ItemCart({ item }: { item: OrderProduct }) {
   const dispatch = useAppDispatch();
 
   return (

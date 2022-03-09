@@ -20,25 +20,25 @@ export default function Address() {
       </Typography>
       <Divider />
       <Grid container spacing={1} sx={Styles.Grid}>
-        <Grid item sm={12}>
+        <Grid item xs={12}>
           <Typography variant="subtitle2">Name</Typography>
           <Typography
             variant={"body2"}
           >{`${user.firstName} ${user.lastName}`}</Typography>
         </Grid>
-        <Grid item sm={6}>
+        <Grid item xs={6}>
           <Typography variant="subtitle2">Town</Typography>
           <Typography variant={"body2"}>{user.address.town}</Typography>
         </Grid>
-        <Grid item sm={6}>
+        <Grid item xs={5}>
           <Typography variant="subtitle2">Zipcode</Typography>
           <Typography variant={"body2"}>{user.address.zipCode}</Typography>
         </Grid>
-        <Grid item sm={12}>
+        <Grid item xs={6} md={12}>
           <Typography variant="subtitle2">Street</Typography>
           <Typography variant={"body2"}>{user.address.street}</Typography>
         </Grid>
-        <Grid item sm={12}>
+        <Grid item xs={5} md={12}>
           <Typography variant="subtitle2">Phone Number</Typography>
           <Typography variant={"body2"}>{user.phone}</Typography>
         </Grid>

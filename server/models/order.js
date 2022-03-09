@@ -20,7 +20,7 @@ const orderSchema = mongoose.Schema({
     type: String,
     enum: ["Ordered", "Delivered", "Ready", "Preparing"],
   },
-  typeDeliver: {
+  deliverType: {
     type: String,
     enum: ["Pickup", "Delivery"],
   },
