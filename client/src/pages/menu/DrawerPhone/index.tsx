@@ -5,6 +5,7 @@ import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 import { Badge, Button, Drawer } from "@mui/material";
 import { OrderList } from "../../../components/OrderList";
 import * as Styled from "./style";
+import Address from "../../../components/AddressCart";
 
 export function DrawerPhone() {
   const [isOpen, setIsOpen] = useState(false);
@@ -14,6 +15,7 @@ export function DrawerPhone() {
     <>
       <Drawer anchor="bottom" open={isOpen} onClose={() => setIsOpen(false)}>
         <OrderList />
+        <Address />
       </Drawer>
       <Button
         variant={"contained"}

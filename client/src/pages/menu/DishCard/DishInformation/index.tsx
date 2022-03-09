@@ -1,8 +1,10 @@
-import React from "react";
+// Types
+import { Product } from "../../../../features/api/apiSlice.types";
+
+// Components
 import { Box, Typography, CardHeader } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { ExpandMore } from "./style";
-import { Product } from "../../../../features/api/apiSliceTypes";
 
 type DishInformationProps = {
   title: Product["title"];

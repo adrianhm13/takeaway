@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 // Types
-import { User } from "../../../features/api/apiSliceTypes";
+import { User } from "../../../features/api/apiSlice.types";
 
 // Components
 import {

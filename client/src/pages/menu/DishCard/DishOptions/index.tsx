@@ -3,7 +3,7 @@ import { useAppDispatch } from "../../../../app/hooks";
 import { addProduct } from "../../../../features/cart/cartSlice";
 
 //Types
-import { Product } from "../../../../features/api/apiSliceTypes";
+import { Product } from "../../../../features/api/apiSlice.types";
 
 //Components
 import {

@@ -1,6 +1,7 @@
 // import { CartState, CartAction } from "../../../context/CartContext";
 import { useAppDispatch } from "../../../app/hooks";
-import { increaseQty, decreaseQty, OrderProduct } from "../../../features/cart/cartSlice";
+import { increaseQty, decreaseQty } from "../../../features/cart/cartSlice";
+import { OrderProduct } from "../../../features/cart/cartSlice.types";
 
 //Icons
 import AddIcon from "@mui/icons-material/Add";

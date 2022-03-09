@@ -12,7 +12,7 @@ import {
 } from "../../features/auth/authSlice";
 
 // Types
-import { LoginRequest } from "../../features/api/apiSliceTypes";
+import { LoginRequest } from "../../features/api/apiSlice.types";
 
 // Components
 import {
@@ -30,7 +30,6 @@ import Icon from "./icon";
 // Styles
 import * as Styled from "./style";
 
-
 type ModalLoginProps = {
   openLogin: boolean;
   onOpenLogin: React.Dispatch<React.SetStateAction<boolean>>;
@@ -47,9 +46,7 @@ export default function ModalLogin(props: ModalLoginProps) {
   const dispatch = useDispatch();
 
   // Login with email and password
-  const handleSubmit: (
-    e: React.FormEvent<HTMLFormElement>
-  ) => Promise<void> = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       const user = await login(formData).unwrap();
@@ -122,7 +119,7 @@ export default function ModalLogin(props: ModalLoginProps) {
               type="submit"
               form="login-form"
             >
-              LOGIN
+              {isLoading ? "Logging in" : "Login"}
             </Button>
             <GoogleLogin
               clientId="464067187874-g5r9mtjq5fbjlku5ubassc3snbe15koh.apps.googleusercontent.com"

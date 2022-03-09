@@ -31,13 +31,13 @@ export function OrderList() {
 
   return (
     <List sx={Styled.ListContainer}>
-      <Typography variant={"h6"} gutterBottom>
+      <Divider />
+      <Typography variant={"h6"} py={1}>
         Your order
       </Typography>
       <Divider />
       {orderList &&
         orderList.map((item) => <ItemCart item={item} key={item.tempId} />)}
-      <Divider />
       <Button
         sx={{ mt: 1 }}
         startIcon={<ShoppingBasketIcon />}

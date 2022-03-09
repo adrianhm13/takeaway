@@ -1,6 +1,8 @@
 import { useState } from "react";
 
-import { Product } from "../../../features/api/apiSliceTypes";
+// Types
+import { Product } from "../../../features/api/apiSlice.types";
+
 //Components
 import { Box, Card, CardActionArea, CardMedia, Collapse } from "@mui/material";
 import { DishInformation } from "./DishInformation";
@@ -10,8 +12,8 @@ import { DishOptions } from "./DishOptions";
 import * as Styled from "./style";
 
 type DishCardProps = {
-  product: Product
-}
+  product: Product;
+};
 
 export default function DishCard({ product }: DishCardProps) {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -48,7 +50,7 @@ export default function DishCard({ product }: DishCardProps) {
           </Box>
           <CardMedia
             component="img"
-            image='product.image'
+            image="product.image"
             alt={product.title}
             sx={Styled.CardImage}
           />

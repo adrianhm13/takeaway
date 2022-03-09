@@ -1,11 +1,24 @@
+// Types
+import { RegisterRequest } from "../../../features/api/apiSlice.types";
+
+// Components
 import { TextField, Grid } from "@mui/material";
+
+
+
+type SignupFormProps = {
+  error: string | null;
+  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
+  formData: RegisterRequest
+  setFormData: React.Dispatch<React.SetStateAction<RegisterRequest>>;
+};
 
 export default function SignupForm({
   error,
   handleSubmit,
   formData,
   setFormData,
-}) {
+}: SignupFormProps) {
   return (
     <form
       autoComplete="off"

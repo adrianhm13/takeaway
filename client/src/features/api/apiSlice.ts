@@ -1,5 +1,11 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { Product, UserResponse, LoginRequest } from "./apiSliceTypes";
+import {
+  Product,
+  UserResponse,
+  LoginRequest,
+  User,
+  RegisterRequest
+} from "./apiSlice.types";
 
 export const apiSlice = createApi({
   reducerPath: "api",
@@ -15,7 +21,14 @@ export const apiSlice = createApi({
         body: credentials,
       }),
     }),
+    registerUser: builder.mutation<UserResponse, RegisterRequest>({
+      query: (registerForm) => ({
+        url: "/users/sign-up",
+        method: "POST",
+        body: registerForm,
+      }),
+    }),
   }),
 });
 
-export const { useFetchProductsQuery, useLoginMutation } = apiSlice;
+export const { useFetchProductsQuery, useLoginMutation, useRegisterUserMutation } = apiSlice;

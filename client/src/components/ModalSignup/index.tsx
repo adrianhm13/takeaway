@@ -1,16 +1,27 @@
-import { useSignup } from "../../hooks/useSignup";
 import { useState } from "react";
+import { useAppDispatch } from "../../app/hooks";
+import { useRegisterUserMutation } from "../../features/api/apiSlice";
+import {
+  saveProfileLocal,
+  setCredentials,
+} from "../../features/auth/authSlice";
 
+// Types
+import { RegisterRequest } from "../../features/api/apiSlice.types";
+
+// Components
 import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import * as Style from "./style";
 import SignupForm from "./SignupForm";
 
-const initialData = {
+// Styles
+import * as Style from "./style";
+
+const initialData: RegisterRequest = {
   firstName: "",
   lastName: "",
   dateBirth: "",
@@ -22,18 +33,28 @@ const initialData = {
   phone: "",
 };
 
-export default function ModalSignup({ onOpenSignup, openSignup }) {
+type ModalSignupProps = {
+  onOpenSignup: React.Dispatch<React.SetStateAction<boolean>>;
+  openSignup: boolean;
+};
+
+export default function ModalSignup({
+  onOpenSignup,
+  openSignup,
+}: ModalSignupProps) {
   const [formData, setFormData] = useState(initialData);
+  const [error, setError] = useState<string | null>(null);
+  const [registerUser, { isLoading }] = useRegisterUserMutation();
+  const dispatch = useAppDispatch();
 
-  const { error, signup } = useSignup();
-
-  const handleClose = () => onOpenSignup(false);
-
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const data = await signup(formData);
-    if (data.ok) {
-      onOpenSignup(false);
+    try {
+      const user = await registerUser(formData).unwrap();
+      dispatch(setCredentials(user));
+      dispatch(saveProfileLocal(user));
+    } catch (error) {
+      setError(error.data.errorMessage);
     }
   };
 
@@ -42,7 +63,7 @@ export default function ModalSignup({ onOpenSignup, openSignup }) {
       aria-labelledby="transition-modal-title"
       aria-describedby="transition-modal-description"
       open={openSignup}
-      onClose={handleClose}
+      onClose={() => onOpenSignup(false)}
       closeAfterTransition
       BackdropComponent={Backdrop}
       BackdropProps={{ timeout: 500 }}
@@ -70,7 +91,7 @@ export default function ModalSignup({ onOpenSignup, openSignup }) {
             type="submit"
             form="signup-form"
           >
-            Signup
+            {isLoading ? "Registering..." : "Signup"}
           </Button>
         </Box>
       </Fade>

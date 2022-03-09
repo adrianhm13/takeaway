@@ -2,7 +2,7 @@
 import { TextField, Stack } from "@mui/material";
 
 // Types
-import { LoginRequest } from "../../../features/api/apiSliceTypes";
+import { LoginRequest } from "../../../features/api/apiSlice.types";
 
 type LoginFormProps = {
   formData: LoginRequest;

@@ -1,5 +1,4 @@
-import { OrderProduct } from "../cart/cartSlice";
-
+import { OrderProduct } from "../cart/cartSlice.types";
 
 export interface Product {
   _id: string;
@@ -34,4 +33,11 @@ export interface UserResponse {
 export interface LoginRequest {
   email: string;
   password: string;
+}
+
+export interface RegisterRequest
+  extends Omit<User, "_id" | "address" | "isAdmin" | "orders"> {
+  street: string;
+  town: string;
+  zipCode: string;
 }
