@@ -1,4 +1,4 @@
-import { OrderProduct } from "../cart/cartSlice.types";
+import { OrderProduct, PaymentType, DeliverType } from "../cart/cartSlice.types";
 
 export interface Product {
   _id: string;
@@ -43,13 +43,10 @@ export interface RegisterRequest
 }
 
 export interface CreateOrderRequest {
-  client: Pick<User, "_id">;
+  client: User['_id'];
   order: Pick<OrderProduct, "id" | "options" | "priceTotal">[];
   totalAmount: number;
   paymentType: PaymentType;
   deliverType: DeliverType;
 }
 
-export type PaymentType = "Card" | "Cash";
-
-export type DeliverType = "Pickup" | "Delivery";

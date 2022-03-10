@@ -4,6 +4,8 @@ import { CartState, OrderProduct } from "./cartSlice.types";
 const initialState: CartState = {
   orderList: [],
   orderTotal: 0,
+  paymentType: "Cash",
+  deliverType: "Pickup",
 };
 
 const cartSlice = createSlice({
@@ -44,6 +46,12 @@ const cartSlice = createSlice({
         }, 0);
       }
     },
+    clearOrder: (state) => {
+      state.orderList = initialState.orderList;
+      state.paymentType = initialState.paymentType;
+      state.deliverType = initialState.deliverType;
+      state.orderTotal = initialState.orderTotal;
+    },
   },
 });
 
@@ -53,5 +61,6 @@ export const {
   decreaseQty,
   deleteProduct,
   updateTotalOrder,
+  clearOrder,
 } = cartSlice.actions;
 export default cartSlice.reducer;

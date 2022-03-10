@@ -3,7 +3,6 @@ import {
   Product,
   UserResponse,
   LoginRequest,
-  User,
   RegisterRequest,
   CreateOrderRequest,
 } from "./apiSlice.types";
@@ -31,12 +30,17 @@ export const apiSlice = createApi({
     }),
     createOrder: builder.mutation<string, CreateOrderRequest>({
       query: (order) => ({
-        url: "/products",
+        url: "/menu",
         method: "POST",
         body: order,
       }),
-    })
+    }),
   }),
 });
 
-export const { useFetchProductsQuery, useLoginMutation, useRegisterUserMutation } = apiSlice;
+export const {
+  useFetchProductsQuery,
+  useLoginMutation,
+  useRegisterUserMutation,
+  useCreateOrderMutation,
+} = apiSlice;

@@ -1,8 +1,15 @@
 import mongoose from "mongoose";
 
 const orderSchema = mongoose.Schema({
-  client: { type: Schema.Types.ObjectId, ref: "User" },
-  products: [{ type: Schema.Types.ObjectId, ref: "Product" }],
+  client: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+  orderList: [
+    {
+      id: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
+      options: [{ type: String }],
+      priceTotal: { type: Number },
+      qty: { type: Number },
+    },
+  ],
   orderedAt: {
     type: Date,
     default: new Date(),

@@ -10,4 +10,10 @@ export interface OrderProduct {
 export interface CartState {
   orderList: OrderProduct[];
   orderTotal: number;
+  paymentType: PaymentType;
+  deliverType: DeliverType;
 }
+
+export type PaymentType = "Card" | "Cash";
+
+export type DeliverType = "Pickup" | "Delivery";
